@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Plastic-Free Awareness Movement</title>
+
+<style>
+
+/* GLOBAL */
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f1020,#1b1c2e);
+  color:white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* LOGIN */
+#loginPage{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.login-box{
+  background:rgba(255,255,255,0.05);
+  padding:40px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(108,92,231,0.4);
+}
+
+input{
+  padding:12px;
+  margin:10px;
+  border:none;
+  border-radius:8px;
+  width:220px;
+  background:#111;
+  color:white;
+  box-sizing: border-box;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  background:#6c5ce7;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+  font-weight: bold;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #6c5ce7;
+}
+
+/* NAVIGATION */
+#navBar {
+  display: none;
+  background: rgba(15, 16, 32, 0.9);
+  padding: 15px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+.nav-btn {
+  background: transparent;
+  border: 2px solid #6c5ce7;
+  color: #a29bfe;
+  margin: 0 5px;
+  padding: 10px 20px;
+}
+
+.nav-btn:hover, .nav-btn.active-nav {
+  background: #6c5ce7;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #6c5ce7;
+}
+
+/* MAIN CONTENT CONTAINER */
+#mainContent {
+  flex: 1;
+}
+
+/* PAGES */
+.page {
+  display: none;
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TITLE */
+.main-title{
+  text-align:center;
+  font-size:40px;
+  font-weight:bold;
+  margin-bottom:30px;
+  color:#a29bfe;
+  text-shadow:0 0 8px rgba(108,92,231,0.6);
+}
+
+/* SECTIONS */
+.section{
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  margin:25px 0;
+  border-radius:15px;
+  box-shadow:0 0 15px rgba(108,92,231,0.2);
+}
+
+h2{
+  color:#a29bfe;
+}
+
+p{
+  color:#ddd;
+  line-height:1.6;
+}
+
+/* IMAGE */
+img{
+  width:100%;
+  max-width:400px;
+  border-radius:12px;
+  margin:20px 0;
+  display: block;
+}
+
+/* TEAM */
+.team{
+  display:flex;
+  gap:20px;
+  flex-wrap: wrap;
+}
+
+.member{
+  background:#1b1c2e;
+  padding:15px 20px;
+  border-radius:10px;
+  flex: 1;
+  text-align: center;
+  min-width: 150px;
+}
+
+/* ABOUT PROJECT CARDS */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.info-card {
+  background: rgba(0,0,0,0.3);
+  padding: 15px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #6c5ce7;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.info-card strong {
+  color: #a29bfe;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.info-card span {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* CALCULATOR */
+.calc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 500px;
+  margin-bottom: 15px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.calc-row label {
+  color: #ddd;
+  font-weight: bold;
+}
+
+.calc-row input {
+  width: 100px;
+  margin: 0;
+  text-align: center;
+}
+
+#calc-result {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(108,92,231,0.2);
+  border-left: 5px solid #6c5ce7;
+  border-radius: 8px;
+  display: none;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* SURVEY */
+.survey-q {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.survey-q p {
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.surv-btn {
+  background: #333;
+  padding: 10px 25px;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.surv-btn:hover {
+  background: #555;
+  transform: none;
+  box-shadow: none;
+}
+
+.surv-btn.active-yes {
+  background: #27ae60;
+  box-shadow: 0 0 10px #27ae60;
+}
+
+.surv-btn.active-no {
+  background: #c0392b;
+  box-shadow: 0 0 10px #c0392b;
+}
+
+.feedback {
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
+  min-height: 20px;
+}
+
+#survey-result {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(108,92,231,0.2);
+  border-left: 5px solid #a29bfe;
+  border-radius: 8px;
+  display: none;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* CHAT PAGE SPECIFIC */
+.chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 60vh;
+  min-height: 400px;
+  background: #1b1c2e;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(108,92,231,0.4);
+  border: 1px solid rgba(108,92,231,0.3);
+}
+
+.chat-header {
+  background: #6c5ce7;
+  padding: 15px;
+  border-radius: 15px 15px 0 0;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.msg {
+  margin: 8px 0;
+  padding: 12px 18px;
+  border-radius: 15px;
+  max-width: 75%;
+  line-height: 1.4;
+}
+
+.user {
+  background: #444;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.bot {
+  background: #6c5ce7;
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.chat-input {
+  display: flex;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 0 0 15px 15px;
+}
+
+.chat-input input {
+  flex: 1;
+  margin: 0 10px 0 0;
+}
+
+/* FOOTER */
+footer {
+  display: none;
+  background: #090a14;
+  color: #ddd;
+  text-align: center;
+  padding: 40px 20px 20px 20px;
+  border-top: 1px solid rgba(108,92,231,0.3);
+  margin-top: auto;
+}
+
+footer h3 {
+  color: #a29bfe;
+  margin-bottom: 15px;
+  margin-top: 0;
+  letter-spacing: 1px;
+}
+
+footer a {
+  color: #74b9ff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+footer a:hover {
+  color: #0984e3;
+  text-decoration: underline;
+}
+
+.footer-links {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-divider {
+  color: #444;
+}
+
+.footer-social {
+  margin: 20px 0;
+}
+
+.footer-social a {
+  background: rgba(255,255,255,0.05);
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(108,92,231,0.3);
+}
+
+.footer-social a:hover {
+  background: rgba(108,92,231,0.2);
+  text-decoration: none;
+}
+
+.footer-copyright {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #888;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="loginPage">
+  <div class="login-box">
+    <h2>Login Page</h2>
+    <p>You are just one click away to make this country plastic free</p>
+    <input placeholder="Username" id="loginUser">
+    <br>
+    <input type="password" placeholder="Password">
+    <br>
+    <button onclick="enterSite()">Enter Website</button>
+  </div>
+</div>
+
+<div id="navBar">
+  <button class="nav-btn active-nav" onclick="showPage('page-home', this)">Home</button>
+  <button class="nav-btn" onclick="showPage('page-survey', this)">Awareness Survey</button>
+  <button class="nav-btn" onclick="showPage('page-calculator', this)">Calculator</button>
+  <button class="nav-btn" onclick="showPage('page-chat', this)">AI Chat Bot</button>
+  <button class="nav-btn" onclick="logout()" style="float: right; border-color: #c0392b; color: #ff7675;">Logout</button>
+</div>
+
+<div id="mainContent">
+
+  <div id="page-home" class="page">
+    <div class="main-title">Plastic-Free Awareness Movement</div>
+
+    <div class="section">
+      <h2>Project Team</h2>
+      <div class="team">
+        <div class="member">Adwait Shinde</div>
+        <div class="member">Siddhant Pawar</div>
+        <div class="member">Om Thakare</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>About the Project</h2>
+      <p>
+        This project focuses on spreading awareness about plastic pollution and encouraging people to adopt eco-friendly alternatives. We directly interacted with residents and tried to influence their daily habits through simple awareness methods.
+      </p>
+      <p>
+        The aim was not just to inform people but to make them think about their plastic usage and motivate them to take small steps like using cloth bags.
+      </p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <strong>Faculty Mentor</strong>
+          <span>Prof. Vaishali Kale</span>
+        </div>
+        <div class="info-card">
+          <strong>College</strong>
+          <span>Vishwakarma College of Arts, Commerce and Science</span>
+        </div>
+        <div class="info-card">
+          <strong>Class</strong>
+          <span>S.Y. BCA — Semester IV</span>
+        </div>
+        <div class="info-card">
+          <strong>University</strong>
+          <span>Savitribai Phule Pune University</span>
+        </div>
+        <div class="info-card">
+          <strong>Academic Year</strong>
+          <span>2025–26</span>
+        </div>
+        <div class="info-card">
+          <strong>Project Site</strong>
+          <span>Kondhwa Budruk, Pune</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Methodology</h2>
+      <p>
+        The methodology of this project was designed to create practical awareness about plastic pollution through direct community engagement and interactive digital tools. The project began with an initial field survey conducted among local residents in Kondhwa Budruk, Pune, where approximately 30 individuals were approached to understand their daily plastic usage habits, level of awareness, and willingness to adopt eco-friendly alternatives. Based on the responses collected, key problem areas were identified, such as continued dependence on single-use plastics due to convenience and lack of accessible alternatives. 
+</p>
+Following this, awareness activities were carried out using simple and relatable communication methods instead of complex technical explanations. Informational posters were displayed in frequently visited areas, and one-on-one conversations were conducted to explain the harmful effects of plastic pollution on the environment, animals, and human health. As a practical intervention, cloth bags were distributed to encourage a shift from plastic bags to reusable options. A small clean-up activity was also organized to demonstrate the visible impact of plastic waste in the local area.
+<p>
+In addition to physical activities, a web-based platform was developed as part of the project to extend awareness digitally. The website includes features such as an awareness survey to evaluate user habits, a plastic footprint calculator to estimate individual plastic usage, and an AI-based chatbot to provide guidance and answer queries related to plastic reduction and sustainability. These tools were designed to make the learning process interactive and engaging, thereby increasing user participation.
+</p>
+<p>
+Overall, the methodology combines survey-based research, community interaction, awareness campaigns, and digital solutions to create a comprehensive approach toward reducing plastic usage and promoting sustainable behavior in everyday life.
+
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Activities Conducted</h2>
+      <p>
+        The project involved a series of well-planned activities aimed at spreading awareness about plastic pollution and encouraging sustainable habits within the community. The first activity conducted was a field survey, where approximately 30 local residents were approached to understand their daily plastic usage patterns and level of awareness regarding environmental issues. This helped in identifying common practices such as frequent use of plastic bags and bottles.
+</p>
+<p>
+Based on the survey findings, awareness campaigns were organized using simple and relatable communication methods. Informational posters highlighting the harmful effects of plastic pollution were displayed in prominent areas to attract attention and educate the public. In addition, direct interaction with residents was carried out to explain the long-term environmental and health impacts of plastic waste in an easy-to-understand manner.
+</p>
+<p>
+To promote practical change, cloth bags were distributed among residents as an alternative to plastic carry bags. This step was taken to encourage people to adopt eco-friendly habits in their daily lives. A clean-up drive was also conducted in the nearby area, where plastic waste was collected to demonstrate the visible impact of pollution and to instill a sense of responsibility among participants.
+</p>
+<p>
+Alongside these physical activities, a digital platform was developed to extend the reach of the project. The website includes features such as an awareness survey, a plastic usage calculator, and an AI chatbot to guide users on reducing plastic consumption. These digital tools were designed to make awareness interactive and accessible to a wider audience.
+</p>
+<p>
+Overall, the activities conducted combined on-ground efforts and digital solutions to effectively communicate the importance of reducing plastic usage and adopting sustainable alternatives.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Survey Findings</h2>
+      <p>
+       The survey conducted as part of this project provided valuable insights into the plastic usage habits and awareness levels of local residents in Kondhwa Budruk, Pune. A total of approximately 30 individuals participated in the survey, representing different age groups and backgrounds. The findings revealed that while a majority of participants were aware of the harmful effects of plastic pollution, this awareness did not always translate into consistent eco-friendly behavior.
+</p>
+<p>
+One of the key observations was that single-use plastic items such as carry bags, water bottles, and straws were still widely used due to convenience and easy availability. Many participants admitted that although they understood the environmental impact, they often chose plastic options because alternatives were not readily accessible or required extra effort. Additionally, only a limited number of respondents practiced proper waste segregation or recycling on a regular basis.
+</p>
+<p>
+However, the survey also indicated a positive attitude toward change. A significant number of participants expressed willingness to adopt sustainable practices if provided with suitable alternatives and guidance. After brief awareness interactions, several individuals showed interest in switching to cloth bags and reusable bottles.
+</p>
+<p>
+Overall, the survey findings highlighted a gap between awareness and actual behavior. While knowledge about plastic pollution exists, consistent action is still lacking. This emphasizes the need for continuous awareness efforts, practical solutions, and community-level initiatives to encourage long-term behavioral change.
+
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>System Input–Output</h2>
+      <p><b>Input:</b> User questions and survey data</p>
+      <p><b>Process:</b> Awareness + chatbot logic</p>
+      <p><b>Output:</b> Increased awareness and reduced plastic usage</p>
+    </div>
+
+    <div class="section">
+      <h2>Understanding Plastic Pollution</h2>
+      <p>
+        Plastic pollution is one of the most serious environmental challenges faced by the world today. Plastic is a non-biodegradable material, which means it does not decompose naturally and can remain in the environment for hundreds of years. Due to its low cost, durability, and widespread use, plastic has become an essential part of daily life; however, improper disposal has led to its accumulation in landfills, water bodies, and natural ecosystems.
+</p>
+<p>
+One of the major concerns associated with plastic pollution is its impact on wildlife and marine life. Animals often mistake plastic for food, which can lead to injury, starvation, or death. In oceans, plastic waste breaks down into smaller particles known as microplastics, which enter the food chain and eventually affect human health. Additionally, burning plastic releases toxic gases that contribute to air pollution and can cause serious health problems.
+</p>
+<p>
+Plastic pollution also affects soil quality and water systems, disrupting natural processes and reducing environmental sustainability. The excessive use of single-use plastics such as bags, bottles, and straws further worsens the situation, as these items are often discarded after a single use.
+</p>
+<p>
+Understanding plastic pollution is essential to developing responsible habits and making informed choices. By reducing plastic consumption, reusing materials, and promoting recycling, individuals can contribute to minimizing environmental damage. Awareness and collective action are key to creating a cleaner and more sustainable future.
+      </p>
+      <img src="2b62ba24-85c3-4131-b907-65311fe14e0f.png" alt="Plastic Pollution Information" onerror="this.style.display='none'">
+      <p>
+        Awareness campaigns help people understand the seriousness of the issue and encourage them to take action in daily life.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p>
+        In conclusion, the Plastic-Free Awareness Movement project successfully highlighted the seriousness of plastic pollution and the urgent need for sustainable practices in daily life. Through a combination of field surveys, awareness campaigns, and digital tools, the project was able to engage with the community and encourage individuals to reflect on their plastic usage habits.
+
+The survey findings revealed that while many people are aware of the harmful effects of plastic, consistent action is still lacking due to convenience and limited access to alternatives. However, the positive response from participants and their willingness to adopt eco-friendly practices indicates that awareness, when combined with practical solutions, can lead to meaningful change.
+
+The activities conducted, such as poster campaigns, distribution of cloth bags, and clean-up drives, helped demonstrate the real impact of plastic waste and motivated individuals to take small but significant steps toward reducing its usage. Additionally, the development of a web-based platform further extended the reach of the project by providing interactive tools like surveys, a plastic footprint calculator, and an AI chatbot.
+
+Overall, this project emphasizes that even small actions, when taken collectively, can contribute to a larger environmental impact. Continuous awareness, community participation, and responsible behavior are essential to reducing plastic pollution and ensuring a cleaner, healthier future for upcoming generations.
+
+      </p>
+    </div>
+  </div>
+
+  <div id="page-survey" class="page">
+    <div class="main-title">Awareness Check</div>
+    
+    <div class="section" id="survey-section">
+      <p>Let's check your current habits. Answer the questions below honestly.</p>
+
+      <div class="survey-q" id="sq1">
+        <p>Q1: Do you use reusable bags?</p>
+        <button class="surv-btn" onclick="answerQ(1, true, this)">Yes</button>
+        <button class="surv-btn" onclick="answerQ(1, false, this)">No</button>
+        <div class="feedback" id="feed1"></div>
+      </div>
+
+      <div class="survey-q" id="sq2">
+        <p>Q2: Do you avoid single-use plastic bottles?</p>
+        <button class="surv-btn" onclick="answerQ(2, true, this)">Yes</button>
+        <button class="surv-btn" onclick="answerQ(2, false, this)">No</button>
+        <div class="feedback" id="feed2"></div>
+      </div>
+
+      <div class="survey-q" id="sq3">
+        <p>Q3: Do you recycle plastic waste properly?</p>
+        <button class="surv-btn" onclick="answerQ(3, true, this)">Yes</button>
+        <button class="surv-btn" onclick="answerQ(3, false, this)">No</button>
+        <div class="feedback" id="feed3"></div>
+      </div>
+
+      <div class="survey-q" id="sq4">
+        <p>Q4: Do you carry your own water bottle?</p>
+        <button class="surv-btn" onclick="answerQ(4, true, this)">Yes</button>
+        <button class="surv-btn" onclick="answerQ(4, false, this)">No</button>
+        <div class="feedback" id="feed4"></div>
+      </div>
+
+      <div class="survey-q" id="sq5">
+        <p>Q5: Do you avoid plastic straws?</p>
+        <button class="surv-btn" onclick="answerQ(5, true, this)">Yes</button>
+        <button class="surv-btn" onclick="answerQ(5, false, this)">No</button>
+        <div class="feedback" id="feed5"></div>
+      </div>
+
+      <button onclick="submitSurvey()" style="margin-top: 15px; width: 100%; font-size: 18px;">Submit Survey</button>
+      
+      <div id="survey-result"></div>
+    </div>
+  </div>
+
+  <div id="page-calculator" class="page">
+    <div class="main-title">Personalised Plastic Calculator</div>
+
+    <div class="section">
+      <h2>Estimate Your Plastic Impact</h2>
+      <p>Enter the approximate number of items you use <b>per week</b> to see your yearly footprint.</p>
+      <br>
+      
+      <div class="calc-row">
+        <label>Plastic Bottles (per week):</label>
+        <input type="number" id="calc-bottles" min="0" value="0">
+      </div>
+      <div class="calc-row">
+        <label>Plastic Bags (per week):</label>
+        <input type="number" id="calc-bags" min="0" value="0">
+      </div>
+      <div class="calc-row">
+        <label>Plastic Straws/Cutlery (per week):</label>
+        <input type="number" id="calc-straws" min="0" value="0">
+      </div>
+      
+      <br>
+      <button onclick="calculatePlastic()" style="width: 100%; max-width: 500px; font-size: 16px;">Calculate Yearly Impact</button>
+      
+      <div id="calc-result"></div>
+    </div>
+  </div>
+
+  <div id="page-chat" class="page">
+    <div class="main-title">AI Assistant</div>
+    
+    <div class="chat-container">
+      <div class="chat-header">Plastic Awareness AI</div>
+      <div class="chat-box" id="chatBox">
+        <div class="msg bot">
+          Hey, this is an AI powered chat bot made to help you regarding plastic awareness! 🌱 Feel free to ask me anything.
+        </div>
+      </div>
+      <div class="chat-input">
+        <input id="chatInput" placeholder="Type a message... (e.g. 'bottle', 'plastic', 'project')">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer id="appFooter">
+  <h3>Plastic-Free Awareness Movement</h3>
+  <div class="footer-links">
+    <a href="mailto:adwait@mailfence.com">adwait@mailfence.com</a>
+    <span class="footer-divider">|</span>
+    <a href="mailto:siddhant2511pawar@gmail.com">siddhant2511pawar@gmail.com</a>
+    <span class="footer-divider">|</span>
+    <a href="mailto:omthakre21st@gmail.com">omthakre21st@gmail.com</a>
+  </div>
+  <div class="footer-social">
+    <a href="https://github.com/Adwxt" target="_blank">View on GitHub</a>
+  </div>
+  <div class="footer-copyright">
+    &copy; 2026 All Rights Reserved
+  </div>
+</footer>
+
+<script>
+
+// --- NAVIGATION & LOGIN LOGIC ---
+function enterSite() {
+  let user = document.getElementById("loginUser").value.trim();
+  if(!user) {
+    alert("Please enter a username.");
+    return;
+  }
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("navBar").style.display = "block";
+  document.getElementById("appFooter").style.display = "block";
+  
+  // Show default home page
+  document.getElementById("page-home").style.display = "block";
+}
+
+function logout() {
+  // Hide nav, pages, and footer
+  document.getElementById("navBar").style.display = "none";
+  document.getElementById("appFooter").style.display = "none";
+  let pages = document.getElementsByClassName("page");
+  for(let i = 0; i < pages.length; i++) {
+    pages[i].style.display = "none";
+  }
+  
+  // Reset fields
+  document.getElementById("loginUser").value = "";
+  
+  // Show login
+  document.getElementById("loginPage").style.display = "flex";
+}
+
+function showPage(pageId, btnElement) {
+  // Hide all pages
+  let pages = document.getElementsByClassName("page");
+  for(let i = 0; i < pages.length; i++) {
+    pages[i].style.display = "none";
+  }
+  
+  // Remove active class from all nav buttons
+  let navBtns = document.getElementsByClassName("nav-btn");
+  for(let i = 0; i < navBtns.length; i++) {
+    navBtns[i].classList.remove("active-nav");
+  }
+
+  // Show target page and activate button
+  document.getElementById(pageId).style.display = "block";
+  if(btnElement) {
+    btnElement.classList.add("active-nav");
+  }
+  
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+// --- SURVEY LOGIC ---
+let surveyAnswers = {1: null, 2: null, 3: null, 4: null, 5: null};
+
+const noSuggestions = {
+  1: "Try switching to reusable bags",
+  2: "Try to choose reusable alternatives instead",
+  3: "Start by separating plastics from general waste",
+  4: "Carrying a bottle saves money and the planet",
+  5: "Ask for no straw or use a metal/paper one"
+};
+
+function answerQ(qNum, isYes, btn) {
+  surveyAnswers[qNum] = isYes;
+  
+  let parent = btn.parentElement;
+  let btns = parent.getElementsByClassName('surv-btn');
+  for(let b of btns) {
+    b.classList.remove('active-yes');
+    b.classList.remove('active-no');
+  }
+  
+  if(isYes) {
+    btn.classList.add('active-yes');
+  } else {
+    btn.classList.add('active-no');
+  }
+
+  let feedDiv = document.getElementById('feed' + qNum);
+  if(isYes) {
+    feedDiv.innerHTML = "✅ Great habit! Keep it up";
+    feedDiv.style.color = "#27ae60";
+  } else {
+    feedDiv.innerHTML = "💡 " + noSuggestions[qNum];
+    feedDiv.style.color = "#f39c12";
+  }
+}
+
+function submitSurvey() {
+  let yesCount = 0;
+  let answeredCount = 0;
+
+  for(let i = 1; i <= 5; i++) {
+    if(surveyAnswers[i] !== null) {
+      answeredCount++;
+      if(surveyAnswers[i] === true) {
+        yesCount++;
+      }
+    }
+  }
+
+  if(answeredCount < 5) {
+    alert("Please answer all 5 questions before submitting.");
+    return;
+  }
+
+  let resultDiv = document.getElementById("survey-result");
+  resultDiv.style.display = "block";
+
+  if(yesCount >= 4) {
+    resultDiv.innerHTML = "<b>Great job! You are already helping the planet 🌱</b>";
+    resultDiv.style.color = "#27ae60";
+    resultDiv.style.borderColor = "#27ae60";
+  } else if(yesCount >= 2) {
+    resultDiv.innerHTML = "<b>Good start! Try improving your daily plastic habits.</b>";
+    resultDiv.style.color = "#f39c12";
+    resultDiv.style.borderColor = "#f39c12";
+  } else {
+    resultDiv.innerHTML = "<b>You can do better! Start with simple steps like reusable bags.</b>";
+    resultDiv.style.color = "#c0392b";
+    resultDiv.style.borderColor = "#c0392b";
+  }
+}
+
+// --- CALCULATOR LOGIC ---
+function calculatePlastic() {
+  let bottles = parseInt(document.getElementById("calc-bottles").value) || 0;
+  let bags = parseInt(document.getElementById("calc-bags").value) || 0;
+  let straws = parseInt(document.getElementById("calc-straws").value) || 0;
+
+  let weeklyTotal = bottles + bags + straws;
+  let yearlyTotal = weeklyTotal * 52;
+  
+  let weeklyWeightKg = (bottles * 0.010) + (bags * 0.005) + (straws * 0.002);
+  let yearlyWeightKg = (weeklyWeightKg * 52).toFixed(2);
+
+  let resultDiv = document.getElementById("calc-result");
+  resultDiv.style.display = "block";
+  
+  if(yearlyTotal === 0) {
+    resultDiv.innerHTML = `Amazing! You are generating <b>0</b> plastic waste from these items. Keep it up! 🌍`;
+  } else {
+    resultDiv.innerHTML = `
+      You use approximately <b>${yearlyTotal}</b> of these plastic items per year.<br>
+      That adds up to roughly <b>${yearlyWeightKg} kg</b> of plastic waste in landfills.<br>
+      <br>
+      💡 <i>Small switch: Replacing just one daily plastic item with a reusable alternative saves 365 items a year!</i>
+    `;
+  }
+}
+
+// --- CHAT LOGIC ---
+function addMessage(text, type) {
+  let div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerText = text;
+  document.getElementById("chatBox").appendChild(div);
+  
+  // Auto scroll to bottom
+  let chatBox = document.getElementById("chatBox");
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function sendMessage() {
+  let input = document.getElementById("chatInput");
+  let text = input.value.trim().toLowerCase();
+  if(!text) return;
+
+  addMessage(input.value, "user");
+  input.value = "";
+
+  let res = botLogic(text);
+  setTimeout(() => addMessage(res, "bot"), 400);
+}
+
+// Allow Enter key to send message
+document.getElementById("chatInput").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+// Allow Enter key to login
+document.getElementById("loginUser").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    enterSite();
+  }
+});
+
+// --- ENHANCED BOT LOGIC ---
+function botLogic(q) {
+  const topics = {
+    burning: ["burn plastic", "plastic burning", "smoke plastic", "burning garbage", "burn", "smoke", "fire", "melt"],
+    reduce: ["reduce plastic", "how to reduce", "less plastic", "avoid plastic", "stop using", "minimize"],
+    recycle: ["recycle", "recycling", "how to recycle", "upcycle", "waste management", "segregate", "bin"],
+    alternatives: ["alternative", "eco friendly", "replace plastic", "substitute", "sustainable", "cloth bag", "jute", "steel"],
+    health: ["is plastic harmful", "health effects", "microplastics", "health", "toxic", "disease", "cancer", "body"],
+    ocean: ["ocean plastic", "sea pollution", "marine life", "ocean", "sea", "beach", "river", "fish", "turtle"],
+    animals: ["animals plastic", "harm animals", "animal", "cow", "dog", "bird", "wildlife", "choke"],
+    daily: ["daily habits", "what can i do", "how to start", "daily", "routine", "individual", "habit"],
+    government: ["rules", "ban plastic", "law", "government", "policy", "fine", "municipality"],
+    project: ["project", "movement", "awareness", "campaign", "team", "who made", "college"],
+    greeting: ["hi", "hello", "hey", "namaste", "morning", "evening", "greetings"],
+    plastic_types: ["types of plastic", "pet", "hdpe", "pvc", "single use", "single-use", "category"],
+    cleanup: ["clean up", "cleanup", "drive", "volunteer", "picking"],
+    composting: ["compost", "biodegradable", "degrade", "decompose", "soil"],
+    grocery: ["grocery", "shopping", "supermarket", "vegetable", "market", "packaging"],
+    bottle: ["bottle", "water bottle", "bisleri", "flask"]
+  };
+
+  const responses = {
+    burning: "Do NOT burn plastic! 🔥 It releases toxic gases that harm your lungs and the environment. Instead, dispose of it properly or recycle.",
+    reduce: "Start small: carry a cloth bag, reusable bottle, and avoid single-use plastics. Every little bit helps! 🛍️",
+    recycle: "Separate dry plastic waste from wet garbage and send it for recycling. Clean items before recycling so they can be processed properly! ♻️",
+    alternatives: "Use cloth or jute bags, steel/copper bottles, glass containers, and paper or bamboo products. 🌿",
+    health: "Plastic can release harmful chemicals and microplastics that enter our food and water, potentially causing long-term health issues. ⚠️",
+    ocean: "Millions of tons of plastic enter our oceans yearly. It harms marine life like turtles and fish, and eventually enters the food chain. 🌊🐢",
+    animals: "Stray animals like cows and dogs often accidentally eat plastic bags while looking for food, which can be fatal. Please don't throw food in tied plastic bags! 🐄",
+    daily: "Simple daily habits like refusing plastic bags from vendors, carrying your own water bottle, and educating your family can make a big difference. 🏡",
+    government: "Many governments have banned single-use plastics. Supporting these laws and reporting illegal plastic dumping helps enforce the ban! 🏛️",
+    project: "Our project, the Plastic-Free Awareness Movement, focuses on spreading awareness, conducting surveys, and distributing cloth bags! Created by Adwait, Siddhant, and Om. 🎓",
+    greeting: "Hello there! 👋 I'm your Plastic-Free Awareness bot. Ask me about reducing plastic, recycling, ocean pollution, or eco-friendly alternatives!",
+    plastic_types: "There are many types of plastic. 'Single-Use Plastic' (like thin bags and straws) is the most dangerous because it's used for minutes but lasts for centuries. 🥤",
+    cleanup: "Organizing or joining a clean-up drive in your community is a fantastic way to spread awareness and visually show the impact of plastic pollution! 🧹",
+    composting: "Unlike organic waste that composts into soil, regular plastic never truly decomposes—it just breaks into tiny microplastics. 🍂",
+    grocery: "When grocery shopping, bring your own cloth bags. Try to buy loose vegetables instead of pre-packaged ones to reduce packaging waste. 🛒",
+    bottle: "Plastic water bottles are a huge source of waste. Carrying your own steel, copper, or glass bottle saves money and helps the planet! 💧"
+  };
+
+  for (let key in topics) {
+    for (let i = 0; i < topics[key].length; i++) {
+      if (q.includes(topics[key][i])) {
+        return responses[key];
+      }
+    }
+  }
+
+  return "I'm here to help with plastic awareness 🌱 Try asking about reducing plastic, recycling, health effects, or daily habits.";
+}
+
+</script>
+
+</body>
+</html>
